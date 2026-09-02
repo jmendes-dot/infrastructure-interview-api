@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM node:24.13.0-alpine3.22 AS build
+FROM node:26.3.0-alpine3.22 AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/root/.npm npm ci --ignore-scripts
@@ -8,13 +8,13 @@ COPY tsconfig.json ./
 COPY src ./src
 RUN npm run build
 
-FROM node:24.13.0-alpine3.22 AS production-dependencies
+FROM node:26.3.0-alpine3.22 AS production-dependencies
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev --ignore-scripts \
     && npm cache clean --force
 
-FROM node:24.13.0-alpine3.22 AS runtime
+FROM node:26.3.0-alpine3.22 AS runtime
 LABEL org.opencontainers.image.title="infrastructure-interview-api" \
       org.opencontainers.image.description="Production-ready posts API" \
       org.opencontainers.image.licenses="MIT"
