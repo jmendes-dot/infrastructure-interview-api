@@ -51,7 +51,7 @@ jobs:
           tags: infrastructure-interview-api:test
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - uses: aquasecurity/trivy-action@0.33.1
+      - uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: infrastructure-interview-api:test
           format: table
