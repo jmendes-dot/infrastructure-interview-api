@@ -1,0 +1,13 @@
+.git
+.github
+.terraform
+coverage
+deploy
+dist
+docs
+node_modules
+scripts
+terraform
+tests
+*.md
+*.tgz

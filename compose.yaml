@@ -1,0 +1,57 @@
+name: infrastructure-interview
+
+services:
+  database:
+    image: mariadb:11.8.3
+    environment:
+      MARIADB_DATABASE: posts
+      MARIADB_USER: posts
+      MARIADB_PASSWORD: local-development-only
+      MARIADB_ROOT_PASSWORD: local-root-only
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - database-data:/var/lib/mysql
+    networks: [backend]
+
+  migrate:
+    build: .
+    command: ["node", "dist/migrate.js"]
+    environment: &application-environment
+      DB_HOST: database
+      DB_PORT: "3306"
+      DB_NAME: posts
+      DB_USER: posts
+      DB_PASSWORD: local-development-only
+      DB_SSL: "false"
+      LOG_LEVEL: info
+    depends_on:
+      database:
+        condition: service_healthy
+    networks: [backend]
+    restart: "no"
+
+  api:
+    build: .
+    environment: *application-environment
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    ports:
+      - "3000:3000"
+    networks: [backend]
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+networks:
+  backend:
+
+volumes:
+  database-data:

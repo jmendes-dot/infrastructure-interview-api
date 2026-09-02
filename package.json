@@ -1,0 +1,42 @@
+{
+  "name": "infrastructure-interview-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-ready posts API for the cloud infrastructure interview exercise",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint .",
+    "migrate": "node dist/migrate.js",
+    "start": "node dist/server.js",
+    "test": "vitest run --coverage.enabled=false",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "express": "5.2.1",
+    "helmet": "8.3.0",
+    "mysql2": "3.24.2",
+    "pino": "10.3.1",
+    "pino-http": "11.0.0",
+    "reflect-metadata": "0.2.2",
+    "typeorm": "0.3.31",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "24.10.1",
+    "@types/supertest": "7.2.1",
+    "eslint": "10.9.1",
+    "supertest": "7.2.2",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.69.0",
+    "vitest": "4.1.11"
+  }
+}

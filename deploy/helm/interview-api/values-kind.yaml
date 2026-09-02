@@ -1,0 +1,18 @@
+image:
+  repository: infrastructure-interview-api
+  tag: local
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  nodePort: 30080
+
+database:
+  host: mariadb
+  existingSecret: interview-api-database
+
+autoscaling:
+  enabled: false
+
+replicaCount: 3
