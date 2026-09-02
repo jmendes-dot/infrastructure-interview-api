@@ -25,7 +25,7 @@
     "pino": "10.3.1",
     "pino-http": "11.0.0",
     "reflect-metadata": "0.2.2",
-    "typeorm": "0.3.31",
+    "typeorm": "1.1.0",
     "zod": "4.5.4"
   },
   "devDependencies": {
